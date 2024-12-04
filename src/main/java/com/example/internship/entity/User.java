@@ -63,7 +63,6 @@ public class User implements UserDetails {
     @Builder.Default
     private boolean enabled = false;
 
-    // UserDetails interface methods
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream()

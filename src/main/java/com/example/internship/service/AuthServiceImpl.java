@@ -52,12 +52,10 @@ public class AuthServiceImpl implements AuthService {
 
         User savedUser = userRepository.save(user);
 
-        // Generate verification token
         String token = UUID.randomUUID().toString();
         VerificationToken verificationToken = new VerificationToken(token, savedUser, TokenType.VERIFICATION);
         verificationTokenRepository.save(verificationToken);
 
-        // Send verification email
         String verificationUrl = "http://localhost:8080/api/v1/auth/verify-email?token=" + token;
         String subject = "Email Verification";
         String body = "Please click the following link to verify your email: " + verificationUrl;
@@ -80,17 +78,14 @@ public class AuthServiceImpl implements AuthService {
             throw new IllegalArgumentException("No user found for this token.");
         }
 
-        // Check if token is expired
         Calendar cal = Calendar.getInstance();
         if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
             throw new IllegalArgumentException("Verification token has expired.");
         }
 
-        // Enable the user
         user.setEnabled(true);
         userRepository.save(user);
 
-        // Delete the token after successful verification
         verificationTokenRepository.delete(verificationToken);
 
         return "Email verified successfully. You can now log in.";
@@ -101,12 +96,10 @@ public class AuthServiceImpl implements AuthService {
         Optional<User> optionalUser = userRepository.findByEmail(passwordResetDTO.getEmail());
         User user = optionalUser.orElseThrow(() -> new ApiException("No user found with that email.", HttpStatusCode.valueOf(409)));
 
-        // Create password reset token
         String token = UUID.randomUUID().toString();
         VerificationToken passwordResetToken = new VerificationToken(token, user, TokenType.PASSWORD_RESET);
         verificationTokenRepository.save(passwordResetToken);
 
-        // Send reset password email
         String resetUrl = "http://localhost:8080/api/v1/auth/reset-password?token=" + token + "&newPassword=" + passwordResetDTO.getNewPassword();
         String subject = "Password Reset Request";
         String body = "Please click the following link to reset your password: " + resetUrl;
@@ -126,17 +119,14 @@ public class AuthServiceImpl implements AuthService {
             throw new IllegalArgumentException("No user found for this token.");
         }
 
-        // Check if token is expired
         Calendar cal = Calendar.getInstance();
         if ((passwordResetToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
             throw new IllegalArgumentException("Password reset token has expired.");
         }
 
-        // Update the user's password
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
 
-        // Delete the password reset token after successful reset
         verificationTokenRepository.delete(passwordResetToken);
 
         return "Password has been reset successfully. You can now log in with your new password.";

@@ -38,8 +38,6 @@ public class AuthController {
     private final JwtService jwtService;
     private final RefreshTokenService refreshTokenService;
     private final AuthService authService;
-    private final VerificationTokenRepository verificationTokenRepository;
-    private final UserRepository userRepository;
 
     @PostMapping("/register")
     public UserDTO register(@Validated @RequestBody AuthRegistrationDTO authRegistrationDTO){

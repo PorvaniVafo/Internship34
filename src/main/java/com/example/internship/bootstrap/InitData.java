@@ -2,27 +2,19 @@ package com.example.internship.bootstrap;
 
 import com.example.internship.entity.Role;
 import com.example.internship.repository.RoleRepository;
-import com.example.internship.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-
 @Component
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class InitData implements CommandLineRunner {
-    @Autowired
-    private UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
     private RoleRepository roleRepository;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         if (roleRepository.findByName("ROLE_ADMIN") == null) {
             Role adminRole = new Role();
             adminRole.setName("ROLE_ADMIN");

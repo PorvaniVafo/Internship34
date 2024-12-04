@@ -12,10 +12,7 @@ import java.util.UUID;
 
 public interface AuthService {
     UserDTO register(AuthRegistrationDTO authRegistrationDTO);
-
     String verifyEmail(String token);
-
     void sendPasswordResetRequest(PasswordResetDTO passwordResetDTO);
-
     String resetPassword(String token, String newPassword);
 }

@@ -1,33 +1,27 @@
 package com.example.internship.service;
 
-import com.example.internship.entity.User;
 import com.example.internship.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import static java.lang.String.format;
 
 @Service
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+    UserRepository repository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> optionalUser = userRepository.findByUsername(username);
-        User user = optionalUser.orElseThrow(() -> new UsernameNotFoundException("Invalid Username"));
-
-        return new org.springframework.security.core.userdetails.User(
-                user.getUsername(),
-                user.getPassword(),
-                user.isEnabled(), // Only allow login if the user is enabled (email verified)
-                true, true, true,
-                user.getAuthorities()
-        );
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+        return repository.findByLogin(login)
+                .orElseThrow(() -> new RuntimeException(format("User not found by: %s", login)));
     }
 }
 
