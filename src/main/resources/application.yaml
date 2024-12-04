@@ -1,0 +1,27 @@
+spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: porvanivafoo@gmail.com
+    password: zgwbfusmvbzoajdv # The generated app password without spaces
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  application:
+    name: Internship
+  datasource:
+    url: jdbc:postgresql://212.132.97.24:5432/pmokhammad
+    username: pmokhammad
+    password: qfP94j9woo8dISPS
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update  # Can be 'none', 'update', 'create', 'create-drop'
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
