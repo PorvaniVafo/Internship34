@@ -43,9 +43,9 @@ public class User implements UserDetails {
 
     private String password;
 
-    @Email
-    @Column(nullable = false, unique = true)
+    @Email(message = "Invalid email format")
     private String email;
+
 
     @CreationTimestamp
     @Column(updatable = false)

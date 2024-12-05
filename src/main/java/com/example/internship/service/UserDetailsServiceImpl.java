@@ -23,6 +23,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return repository.findByLogin(login)
                 .orElseThrow(() -> new RuntimeException(format("User not found by: %s", login)));
     }
+
 }
 
 

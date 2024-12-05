@@ -12,6 +12,7 @@ import com.example.internship.repository.VerificationTokenRepository;
 import com.example.internship.service.AuthService;
 import com.example.internship.service.JwtService;
 import com.example.internship.service.RefreshTokenService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -40,7 +41,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public UserDTO register(@Validated @RequestBody AuthRegistrationDTO authRegistrationDTO){
+    public UserDTO register(@Valid @Validated @RequestBody AuthRegistrationDTO authRegistrationDTO){
         return authService.register(authRegistrationDTO);
     }
 

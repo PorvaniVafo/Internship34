@@ -6,6 +6,8 @@ import com.example.internship.dto.reset.PasswordResetDTO;
 import com.example.internship.entity.User;
 import com.example.internship.entity.VerificationToken;
 import com.example.internship.enums.TokenType;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.Calendar;
 import java.util.UUID;
@@ -15,4 +17,5 @@ public interface AuthService {
     String verifyEmail(String token);
     void sendPasswordResetRequest(PasswordResetDTO passwordResetDTO);
     String resetPassword(String token, String newPassword);
+
 }

@@ -28,10 +28,11 @@ public class AuthConfig {
         return authProvider;
     }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
+    @Bean(name = "authAuthenticationManager")
+    public AuthenticationManager authAuthenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {

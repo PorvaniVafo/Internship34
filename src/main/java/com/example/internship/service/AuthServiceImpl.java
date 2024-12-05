@@ -17,7 +17,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Optional;
 import java.util.Set;
@@ -56,7 +55,7 @@ public class AuthServiceImpl implements AuthService {
         VerificationToken verificationToken = new VerificationToken(token, savedUser, TokenType.VERIFICATION);
         verificationTokenRepository.save(verificationToken);
 
-        String verificationUrl = "http://localhost:8080/api/v1/auth/verify-email?token=" + token;
+        String verificationUrl = "http://localhost:8083/api/v1/auth/verify-email?token=" + token;
         String subject = "Email Verification";
         String body = "Please click the following link to verify your email: " + verificationUrl;
 
@@ -131,4 +130,5 @@ public class AuthServiceImpl implements AuthService {
 
         return "Password has been reset successfully. You can now log in with your new password.";
     }
+
 }
