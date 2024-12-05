@@ -13,12 +13,20 @@ spring:
 
   application:
     name: Internship
+
   datasource:
     url: jdbc:postgresql://212.132.97.24:5432/pmokhammad
     username: pmokhammad
     password: qfP94j9woo8dISPS
-    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+
+
+server:
+  port: 8081
