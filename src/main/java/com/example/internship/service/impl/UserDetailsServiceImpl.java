@@ -1,4 +1,4 @@
-package com.example.internship.service;
+package com.example.internship.service.impl;
 
 import com.example.internship.repository.UserRepository;
 import lombok.AccessLevel;

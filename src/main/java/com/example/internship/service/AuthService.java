@@ -17,5 +17,4 @@ public interface AuthService {
     String verifyEmail(String token);
     void sendPasswordResetRequest(PasswordResetDTO passwordResetDTO);
     String resetPassword(String token, String newPassword);
-
 }

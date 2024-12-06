@@ -1,4 +1,4 @@
-package com.example.internship.service;
+package com.example.internship.service.impl;
 
 import com.example.internship.dto.UserDTO;
 import com.example.internship.dto.authorization.AuthRegistrationDTO;
@@ -12,8 +12,9 @@ import com.example.internship.mappers.UserMapper;
 import com.example.internship.repository.RoleRepository;
 import com.example.internship.repository.UserRepository;
 import com.example.internship.repository.VerificationTokenRepository;
+import com.example.internship.service.AuthService;
+import com.example.internship.service.MailService;
 import org.springframework.http.HttpStatusCode;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ import java.util.UUID;
 
 @Service
 public class AuthServiceImpl implements AuthService {
+
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final UserMapper userMapper;
@@ -99,7 +101,7 @@ public class AuthServiceImpl implements AuthService {
         VerificationToken passwordResetToken = new VerificationToken(token, user, TokenType.PASSWORD_RESET);
         verificationTokenRepository.save(passwordResetToken);
 
-        String resetUrl = "http://localhost:8080/api/v1/auth/reset-password?token=" + token + "&newPassword=" + passwordResetDTO.getNewPassword();
+        String resetUrl = "http://localhost:8083/api/v1/auth/reset-password?token=" + token + "&newPassword=" + passwordResetDTO.getNewPassword();
         String subject = "Password Reset Request";
         String body = "Please click the following link to reset your password: " + resetUrl;
         mailService.sendEmail(user.getEmail(), subject, body);
