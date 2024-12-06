@@ -46,7 +46,6 @@ public class User implements UserDetails {
     @Email(message = "Invalid email format")
     private String email;
 
-
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime createdAt;
@@ -60,8 +59,7 @@ public class User implements UserDetails {
     private Set<Role> roles;
 
     @Column(name = "enabled")
-    @Builder.Default
-    private boolean enabled = false;
+    boolean enabled;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
