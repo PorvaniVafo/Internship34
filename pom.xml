@@ -115,7 +115,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>3.3.5</version>
                 <configuration>
-                    <mainClass>com.alatoo.reshu_ort.ReshuOrtApplication</mainClass>
+                    <mainClass>com.example.internship</mainClass>
                 </configuration>
             </plugin>
             <plugin>
