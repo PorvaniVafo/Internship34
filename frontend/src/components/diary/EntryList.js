@@ -1,17 +1,13 @@
-import React from "react";
+import React from 'react';
 
-const EntryList = ({ entries, onEdit, onDelete }) => {
-    return (
-        <div>
-            {entries.map((entry) => (
-                <div key={entry.id}>
-                    <h3>{entry.title}</h3>
-                    <button onClick={() => onEdit(entry)}>Edit</button>
-                    <button onClick={() => onDelete(entry.id)}>Delete</button>
-                </div>
-            ))}
+const ConfirmationModal = ({ onConfirm, onCancel }) => (
+    <div className="modal">
+        <div className="modal-content">
+            <p>Are you sure you want to delete this entry?</p>
+            <button onClick={onConfirm}>Delete</button>
+            <button onClick={onCancel}>Cancel</button>
         </div>
-    );
-};
+    </div>
+);
 
-export default EntryList;
+export default ConfirmationModal;
