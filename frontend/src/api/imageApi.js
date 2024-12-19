@@ -1,10 +1,9 @@
-// API для загрузки изображения
 export const uploadImage = async (entryId, file) => {
     const formData = new FormData();
     formData.append('image', file);
 
     try {
-        const response = await fetch(`/api/entries/${entryId}/upload-image`, {
+        const response = await fetch(`http://localhost:8088/api/v1/posts/{{postId}}/images?`, {
             method: 'POST',
             body: formData,
         });
@@ -17,10 +16,9 @@ export const uploadImage = async (entryId, file) => {
     }
 };
 
-// API для удаления изображения
 export const deleteImage = async (entryId) => {
     try {
-        const response = await fetch(`/api/entries/${entryId}/delete-image`, {
+        const response = await fetch(`http://localhost:8088/api/v1/posts/{{postId}}/images/{{imageId}}`, {
             method: 'DELETE',
         });
         if (!response.ok) {
