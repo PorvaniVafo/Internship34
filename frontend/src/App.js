@@ -1,16 +1,21 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import HomePage from './pages/HomePage';
-import EditPage from './pages/EditPage';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
+import ErrorBoundary from './components/ErrorBoundary';
 
 function App() {
     return (
-        <Router>
-            <Routes>
-                <Route path="/edit/:id" element={<EditPage />} />
-                <Route path="/" element={<HomePage />} />
-            </Routes>
-        </Router>
+        <ErrorBoundary>
+            <Router>
+                <Routes>
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/register" element={<RegisterPage />} />
+                    <Route path="/reset-password" element={<ResetPasswordPage />} />
+                </Routes>
+            </Router>
+        </ErrorBoundary>
     );
 }
 
