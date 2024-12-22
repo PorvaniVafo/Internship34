@@ -57,7 +57,7 @@ public class AuthServiceImpl implements AuthService {
         VerificationToken verificationToken = new VerificationToken(token, savedUser, TokenType.VERIFICATION);
         verificationTokenRepository.save(verificationToken);
 
-        String verificationUrl = "http://localhost:8089/api/v1/auth/verify-email?token=" + token;
+        String verificationUrl = "http://localhost:3000/api/v1/auth/verify-email?token=" + token;
         String subject = "Email Verification";
         String body = "Please click the following link to verify your email: " + verificationUrl;
 
@@ -101,7 +101,7 @@ public class AuthServiceImpl implements AuthService {
         VerificationToken passwordResetToken = new VerificationToken(token, user, TokenType.PASSWORD_RESET);
         verificationTokenRepository.save(passwordResetToken);
 
-        String resetUrl = "http://localhost:8089/api/v1/auth/reset-password?token=" + token + "&newPassword=" + passwordResetDTO.getNewPassword();
+        String resetUrl = "http://localhost:3000/api/v1/auth/reset-password?token=" + token + "&newPassword=" + passwordResetDTO.getNewPassword();
         String subject = "Password Reset Request";
         String body = "Please click the following link to reset your password: " + resetUrl;
         mailService.sendEmail(user.getEmail(), subject, body);

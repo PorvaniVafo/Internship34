@@ -1,34 +1,34 @@
 import React, { useState } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
 import { resetPassword } from '../api/authApi';
 
-const ResetPasswordPage = () => {
-    const [searchParams] = useSearchParams();
+const ResetPassword = () => {
+    const [token, setToken] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
-    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const token = searchParams.get('token');
-        if (!token) {
-            setError('Token is missing.');
-            return;
-        }
+        setError('');
+        setMessage('');
 
         try {
             const response = await resetPassword(token, newPassword);
             setMessage(response);
-            setTimeout(() => navigate('/login'), 3000);
         } catch (err) {
-            setError(err.message || 'Failed to reset password.');
+            setError(err.message || 'Something went wrong.');
         }
     };
 
     return (
         <form onSubmit={handleSubmit}>
-            <h1>Reset Password</h1>
+            <input
+                type="text"
+                placeholder="Reset Token"
+                value={token}
+                onChange={(e) => setToken(e.target.value)}
+                required
+            />
             <input
                 type="password"
                 placeholder="New Password"
@@ -36,11 +36,11 @@ const ResetPasswordPage = () => {
                 onChange={(e) => setNewPassword(e.target.value)}
                 required
             />
-            {message && <p style={{ color: 'green' }}>{message}</p>}
             {error && <p style={{ color: 'red' }}>{error}</p>}
+            {message && <p style={{ color: 'green' }}>{message}</p>}
             <button type="submit">Reset Password</button>
         </form>
     );
 };
 
-export default ResetPasswordPage;
+export default ResetPassword;

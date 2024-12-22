@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { sendResetPasswordEmail } from '../api/authApi';
+import { requestPasswordReset } from '../api/authApi';
 
-const PasswordRecovery = () => {
+const ForgotPassword = () => {
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
@@ -19,7 +19,7 @@ const PasswordRecovery = () => {
 
         setLoading(true);
         try {
-            await sendResetPasswordEmail(email);
+            await requestPasswordReset(email);
             setMessage('Reset link sent to your email');
         } catch (err) {
             setError(err.message || 'Something went wrong');
@@ -37,8 +37,8 @@ const PasswordRecovery = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 required
             />
-            {message && <p>{message}</p>}
-            {error && <p>{error}</p>}
+            {message && <p style={{ color: 'green' }}>{message}</p>}
+            {error && <p style={{ color: 'red' }}>{error}</p>}
             <button type="submit" disabled={loading}>
                 {loading ? 'Sending...' : 'Send Reset Link'}
             </button>
@@ -46,4 +46,4 @@ const PasswordRecovery = () => {
     );
 };
 
-export default PasswordRecovery;
+export default ForgotPassword;

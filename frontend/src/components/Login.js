@@ -1,40 +1,43 @@
 import React, { useState } from 'react';
-import { registerUser } from '../api/authApi';
+import { loginUser } from '../api/authApi';
 import { useNavigate } from 'react-router-dom';
 
-const RegisterPage = () => {
+const Login = () => {
     const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate(); // Hook for navigation
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            await registerUser(username, email, password);
-            alert('Registration successful! Please verify your email.');
-            navigate('/login');
-        } catch (err) {
-            setError(err.message || 'Something went wrong.');
+        setError('');
+
+        if (!username || !password) {
+            setError('Both username and password are required.');
+            return;
         }
+
+        setLoading(true);
+        try {
+            const response = await loginUser(username, password);
+            localStorage.setItem('accessToken', response.accessToken);
+            navigate('/diary');
+        } catch (err) {
+            setError(err.message || 'Invalid credentials.');
+        }
+
     };
 
     return (
         <form onSubmit={handleSubmit}>
-            <h1>Register</h1>
+            <h1>Login</h1>
             <input
                 type="text"
                 placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                required
-            />
-            <input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
                 required
             />
             <input
@@ -45,9 +48,11 @@ const RegisterPage = () => {
                 required
             />
             {error && <p style={{ color: 'red' }}>{error}</p>}
-            <button type="submit">Register</button>
+            <button type="submit" disabled={loading}>
+                {loading ? 'Logging in...' : 'Login'}
+            </button>
         </form>
     );
 };
 
-export default RegisterPage;
+export default Login;

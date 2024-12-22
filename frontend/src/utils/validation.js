@@ -1,8 +1,8 @@
 export const validateEmail = (email) => {
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 };
 
 export const validatePassword = (password) => {
-    return password.length >= 8; // Минимум 8 символов для пароля
+    return password.length >= 6; // Example: Require at least 6 characters
 };

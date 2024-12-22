@@ -1,29 +1,15 @@
-import React, { useState } from 'react';
-import EntryList from '../components/EntryList';
-import EntryForm from '../components/EntryForm';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const HomePage = () => {
-    const [editingEntry, setEditingEntry] = useState(null);
-
-    const handleSave = () => {
-        setEditingEntry(null); // скрыть форму после сохранения
-    };
-
     return (
-        <div>
-            <h1>Diary Entries</h1>
-            <button onClick={() => setEditingEntry({})}>Create New Entry</button>
-
-            {editingEntry ? (
-                <EntryForm
-                    entryId={editingEntry.id}
-                    existingTitle={editingEntry.title}
-                    existingContent={editingEntry.content}
-                    onSave={handleSave}
-                />
-            ) : (
-                <EntryList onEdit={setEditingEntry} />
-            )}
+        <div className="home-page">
+            <h1>Welcome to My Diary</h1>
+            <p>Your private place to write and manage your thoughts.</p>
+            <div className="home-links">
+                <Link to="/login" className="button-link">Login</Link>
+                <Link to="/register" className="button-link">Register</Link>
+            </div>
         </div>
     );
 };

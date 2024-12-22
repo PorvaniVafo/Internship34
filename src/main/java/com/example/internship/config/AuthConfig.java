@@ -30,8 +30,7 @@ public class AuthConfig {
 
     @Bean(name = "authAuthenticationManager")
     public AuthenticationManager authAuthenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
+        return authenticationConfiguration.getAuthenticationManager();}
 
 
     @Bean

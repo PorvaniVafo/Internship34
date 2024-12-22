@@ -1,39 +1,55 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8088/api/v1/auth/';  // Укажите ваш URL API
+const API_URL = 'http://localhost:3000/api/v1/auth';
 
-export const registerUser = async (email, password) => {
+const handleError = (error) => {
+    const message = error.response?.data?.message || 'An unexpected error occurred.';
+    throw new Error(message);
+};
+
+export const registerUser = async (username, email, password) => {
     try {
-        const response = await axios.post(`${API_URL}/register`, { email, password });
+        const response = await axios.post(`${API_URL}/register`, { username, email, password });
         return response.data;
     } catch (error) {
-        throw error.response ? error.response.data : error;
+        handleError(error);
     }
 };
 
-export const loginUser = async (email, password) => {
+export const loginUser = async (username, password) => {
     try {
-        const response = await axios.post(`${API_URL}/login`, { email, password });
+        const response = await axios.post(`${API_URL}/login`, { username, password });
         return response.data;
     } catch (error) {
-        throw error.response ? error.response.data : error;
+        handleError(error);
     }
 };
 
-export const sendResetPasswordEmail = async (email) => {
+export const verifyEmail = async (token) => {
     try {
-        const response = await axios.post(`${API_URL}/forgot-password`, { email });
+        const response = await axios.get(`${API_URL}/verify-email`, { params: { token } });
         return response.data;
     } catch (error) {
-        throw error.response ? error.response.data : error;
+        handleError(error);
     }
 };
 
-export const resetPassword = async (newPassword, token) => {
+export const requestPasswordReset = async (email) => {
     try {
-        const response = await axios.post(`${API_URL}/reset-password`, { newPassword, token });
+        const response = await axios.post(`${API_URL}/reset-password-request`, { email });
         return response.data;
     } catch (error) {
-        throw error.response ? error.response.data : error;
+        handleError(error);
+    }
+};
+
+export const resetPassword = async (token, newPassword) => {
+    try {
+        const response = await axios.post(`${API_URL}/reset-password`, null, {
+            params: { token, newPassword },
+        });
+        return response.data;
+    } catch (error) {
+        handleError(error);
     }
 };
